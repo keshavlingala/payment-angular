@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-center">
+  <mat-card class="m-5 p-4">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-error *ngIf="loginForm.errors">{{loginForm.errors.message}}</mat-error>
+    <mat-error *ngIf="loginForm.errors">{{loginForm.errors.description}}</mat-error>
+    <mat-card-content>
+      <form class="d-flex flex-column" [formGroup]="loginForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input placeholder="Username" matInput formControlName="username" type="text">
+          <mat-error>Username is Required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input type="password" placeholder="Password" matInput formControlName="password">
+          <mat-error>Password is required</mat-error>
+        </mat-form-field>
+        <button class="mt-3" (click)="login()" mat-raised-button color="primary">Login</button>
+        <button class="mt-3" (click)="register()" mat-raised-button color="accent">Register</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<pre>
+  {{loginForm.value | json}}
+  {{loginForm.errors | json}}
+</pre>
