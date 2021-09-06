@@ -1,1 +1,67 @@
-<p>home works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <mat-stepper orientation="vertical">
+        <mat-step>
+          <ng-template matStepLabel>Sender Form</ng-template>
+          <ng-template matStepContent>
+            <div>
+              <form class="d-flex flex-column" [formGroup]="senderForm">
+                <mat-form-field color="primary" appearance="outline">
+                  <mat-label>Sender A/C Number</mat-label>
+                  <input (keyup.enter)="fetchDetails()" appNumbersOnly formControlName="accountNumber" type="text"
+                         matInput
+                         placeholder="Sender Account Number">
+                </mat-form-field>
+                <mat-form-field color="primary" appearance="outline">
+                  <mat-label>Sender Name</mat-label>
+                  <input formControlName="accountName" type="text" matInput placeholder="Sender Account Number">
+                </mat-form-field>
+                <mat-form-field color="primary" appearance="outline">
+                  <mat-label>Clear Balance</mat-label>
+                  <input formControlName="clearBalance" type="text" matInput placeholder="Sender Account Number">
+                </mat-form-field>
+              </form>
+            </div>
+            <button mat-button matStepperNext>Next</button>
+          </ng-template>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Step 2</ng-template>
+          <ng-template matStepContent>
+            <p>This content was also rendered lazily</p>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </ng-template>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Step 3</ng-template>
+          <p>This content was rendered eagerly</p>
+          <button mat-button matStepperPrevious>Back</button>
+        </mat-step>
+      </mat-stepper>
+    </div>
+    <div class="col-4">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Customer Updated Details
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              A/C : Example
+            </mat-list-item>
+            <mat-list-item>
+              Name : Example
+            </mat-list-item>
+            <mat-list-item>
+              Clear Balance : Example
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
