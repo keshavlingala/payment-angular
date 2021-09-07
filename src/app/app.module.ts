@@ -21,13 +21,19 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatDialogModule} from "@angular/material/dialog";
+import { ErrorComponent } from './dialogs/error/error.component';
+import { SuccessComponent } from './dialogs/success/success.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    NumbersOnlyDirective
+    NumbersOnlyDirective,
+    ErrorComponent,
+    SuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatSelectModule,
     MatOptionModule,
     MatTooltipModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
   providers: [
     {

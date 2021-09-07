@@ -1,10 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../data.service";
-import {CurrencyType, MessageType, TransferTypeCode} from "../models/models";
+import {CurrencyType, MessageType, TransactionRequest, TransferTypeCode} from "../models/models";
 import {Observable, of} from "rxjs";
 import {MatSelect} from "@angular/material/select";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorComponent} from "../dialogs/error/error.component";
+import {SuccessComponent} from "../dialogs/success/success.component";
 
 @Component({
   selector: 'app-home',
@@ -28,28 +31,29 @@ export class HomeComponent implements OnInit {
     {code: 'USD', name: 'US Dollar', value: 74, symbol: '$'}
   ]
   @ViewChild('currencyInput') matSelect!: MatSelect;
+  lastTransaction = this.data.getLastTransaction();
 
   constructor(
     private fb: FormBuilder,
-    private data: DataService
+    private data: DataService,
+    private dialog: MatDialog
   ) {
     this.senderForm = fb.group({
-      accountNumber: ['', [Validators.required]],
+      accountNumber: ['', [Validators.required, Validators.maxLength(14), Validators.minLength(14)]],
       accountName: [{value: '', disabled: true}],
       clearBalance: [{value: '', disabled: true}],
       senderBIC: [{value: 'HDFCINBBAHM', disabled: true}]
     })
     this.receiverForm = fb.group({
-      receiverAccountNumber: ['', Validators.required],
+      receiverAccountNumber: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
       receiverAccountName: ['', Validators.required],
-      receiverBIC: ['', Validators.required],
+      receiverBIC: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
       receiverBankName: [{value: '', disabled: true}]
     });
     this.employeeForm = fb.group({
       transferTypeCode: ['', Validators.required],
       messageCode: ['', Validators.required],
       amount: ['', Validators.required],
-      currency: ['1', Validators.required],
       totalAmount: [{value: 0, disabled: true}]
     })
   }
@@ -57,20 +61,32 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     this.transferTypeCodeList = this.data.getTransferTypeCodes();
     this.messageCodes = this.data.getMessageTypeCodes();
+
   }
 
   fetchDetails() {
-    this.data.getCustomerData(this.senderForm.value.accountNumber).subscribe(value => {
-      this.senderForm.get('accountName')?.setValue(value.name);
-      this.senderForm.get('clearBalance')?.setValue(value.clearBalance);
-    });
+    if (this.senderForm.valid)
+      this.data.getCustomerData(this.senderForm.value.accountNumber).subscribe(value => {
+        this.senderForm.get('accountName')?.setValue(value.name);
+        this.senderForm.get('clearBalance')?.setValue(value.clearBalance);
+      }, (error) => {
+        this.dialog.open(ErrorComponent, {
+          data: error
+        }).afterClosed().subscribe(s => this.senderForm.reset())
+      });
   }
 
   fetchBIC() {
-    const {receiverBIC} = this.receiverForm.value;
-    this.data.getBankByBIC(receiverBIC).subscribe(val => {
-      this.receiverForm.get('receiverBankName')?.setValue(val.name);
-    })
+    if (this.receiverForm.valid) {
+      const {receiverBIC} = this.receiverForm.value;
+      this.data.getBankByBIC(receiverBIC).subscribe(val => {
+        this.receiverForm.get('receiverBankName')?.setValue(val.name);
+      }, error => {
+        this.dialog.open(ErrorComponent, {
+          data: error
+        }).afterClosed().subscribe(s => this.receiverForm.reset())
+      })
+    }
   }
 
   getCurrencyItem() {
@@ -88,5 +104,36 @@ export class HomeComponent implements OnInit {
 
   submit() {
     console.log({...this.employeeForm.value, ...this.senderForm.value, ...this.receiverForm.value})
+    const {
+      accountNumber = '',
+      amount = 0,
+      messageCode = '',
+      receiverAccountName = '',
+      receiverAccountNumber = '',
+      receiverBIC = '',
+      transferTypeCode = ''
+    } = {...this.employeeForm.value, ...this.senderForm.value, ...this.receiverForm.value}
+    const transactionRequest: TransactionRequest = {
+      payload: {
+        customerId: accountNumber,
+        amount,
+        messageCode,
+        receiverAccountName,
+        receiverAccountNumber,
+        receiverBIC,
+        transferTypeCode
+      }
+    }
+    this.data.transactionRequest(transactionRequest).subscribe(val => {
+      console.log(val);
+      this.dialog.open(SuccessComponent)
+      this.lastTransaction = this.data.getLastTransaction();
+    }, error => {
+      console.log(error)
+      this.dialog.open(ErrorComponent, {
+        data: error
+      })
+    })
   }
 }
+

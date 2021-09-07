@@ -1,3 +1,5 @@
+import {HttpErrorResponse} from "@angular/common/http";
+
 export interface Customer {
   accountNumber: string;
   clearBalance: number;
@@ -26,3 +28,42 @@ export interface CurrencyType {
   value: number;
   symbol: string;
 }
+
+export interface ErrorResponse extends HttpErrorResponse {
+  error: {
+    message: string;
+    description: string;
+  }
+}
+
+export interface TransactionRequest {
+  payload: {
+    customerId: string;
+    amount: number;
+    messageCode: string;
+    receiverAccountNumber: string;
+    receiverAccountName: string;
+    receiverBIC: string;
+    transferTypeCode: 'C' | 'O'
+  }
+}
+
+export interface TransactionResponse {
+  sender: {
+    accountNumber: string;
+    name: string;
+    clearBalance: number;
+    overdraft: boolean
+  },
+  transaction: {
+    transferFee: number;
+    totalAmount: number;
+    transferTypeCode: 'C' | 'O'
+  },
+  date: Date;
+  receiverBIC: string;
+  receiverAccountNumber: string;
+  receiverAccountName: string;
+  messageCode: string;
+}
+

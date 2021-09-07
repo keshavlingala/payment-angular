@@ -12,6 +12,13 @@
                        formControlName="accountNumber" type="text"
                        matInput
                        placeholder="Sender Account Number">
+                <mat-error *ngIf="senderForm.get('accountNumber')?.errors?.required">A/C Number is Required</mat-error>
+                <mat-error *ngIf="senderForm.get('accountNumber')?.errors?.minlength">A/C Number must be 14 digits
+                  long
+                </mat-error>
+                <mat-error *ngIf="senderForm.get('accountNumber')?.errors?.maxlength">A/C Number must be 14 digits
+                  long
+                </mat-error>
               </mat-form-field>
               <mat-form-field color="primary" appearance="outline">
                 <mat-label>Sender Name</mat-label>
@@ -40,6 +47,15 @@
                 <input appNumbersOnly formControlName="receiverAccountNumber" type="text"
                        matInput
                        placeholder="Sender Account Number">
+                <mat-error *ngIf="receiverForm.get('receiverAccountNumber')?.errors?.required">A/C Number is Required
+                </mat-error>
+                <mat-error *ngIf="receiverForm.get('receiverAccountNumber')?.errors?.minlength">A/C Number must be 14
+                  digits long
+                </mat-error>
+                <mat-error *ngIf="receiverForm.get('receiverAccountNumber')?.errors?.maxlength">A/C Number must be 14
+                  digits long
+                </mat-error>
+
               </mat-form-field>
               <mat-form-field color="primary" appearance="outline">
                 <mat-label>Receiver A/C Holder Name</mat-label>
@@ -49,6 +65,11 @@
               <mat-form-field (focusout)="fetchBIC()" color="primary" appearance="outline">
                 <mat-label>Receiver BIC</mat-label>
                 <input formControlName="receiverBIC" type="text" matInput>
+                <mat-error *ngIf="receiverForm.get('receiverBIC')?.errors?.required">BIC is Required</mat-error>
+                <mat-error *ngIf="receiverForm.get('receiverBIC')?.errors?.minlength">BIC must be 11 characters long
+                </mat-error>
+                <mat-error *ngIf="receiverForm.get('receiverBIC')?.errors?.maxlength">BIC must be 11 characters long
+                </mat-error>
               </mat-form-field>
               <mat-form-field color="primary" appearance="outline">
                 <mat-label>Receiver Bank Name</mat-label>
@@ -103,7 +124,7 @@
             </mat-form-field>
             <mat-form-field color="primary" appearance="outline">
               <mat-label>Total Amount in INR</mat-label>
-              <input class="text-end adjust-text bold-currency" formControlName="totalAmount" placeholder="0"
+              <input class="text-end adjust-text bold-me" formControlName="totalAmount" placeholder="0"
                      type="text"
                      matInput>
               <span matPrefix>₹&nbsp;</span>
@@ -111,28 +132,80 @@
               <mat-hint>Including Transfer Fee of 0.25% : <span
                 class="italic-currency">{{getETC() | currency:'INR' }}</span></mat-hint>
             </mat-form-field>
-            <button color="primary" mat-raised-button (click)="submit()">Transfer</button>
+            <button [disabled]="senderForm.invalid || receiverForm.invalid || employeeForm.invalid" color="primary"
+                    mat-raised-button (click)="submit()">Transfer
+            </button>
           </form>
         </mat-step>
       </mat-stepper>
     </div>
-    <div class="col-4">
+    <div *ngIf="lastTransaction" class="col-4">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            Customer Updated Details
+            Last Transaction Details
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <mat-list>
+            <div class="bold-me" mat-subheader>Sender</div>
             <mat-list-item>
-              A/C : Example
+              <span mat-line>A/C :</span>
+              <span class="bold-me">{{lastTransaction.sender.accountNumber}}</span>
             </mat-list-item>
+
             <mat-list-item>
-              Name : Example
+              <span mat-line>Name :</span>
+              <span class="bold-me">{{lastTransaction.sender.name}}</span></mat-list-item>
+
+            <mat-list-item>
+              <span mat-line>Clear Balance :</span>
+              <span class="bold-me">{{lastTransaction.sender.clearBalance | currency:'INR'}}
+              </span></mat-list-item>
+
+            <div class="bold-me" mat-subheader>Receiver</div>
+            <mat-list-item>
+              <span mat-line>A/C Number : </span>
+              <span class="bold-me">
+                {{lastTransaction.receiverAccountNumber}}
+              </span>
             </mat-list-item>
+
             <mat-list-item>
-              Clear Balance : Example
+              <span mat-line>A/C Holder Name : </span>
+              <span class="bold-me">{{lastTransaction.receiverAccountName}}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <span mat-line>BIC Code:</span>
+              <span class="bold-me">{{lastTransaction.receiverBIC}}</span>
+            </mat-list-item>
+
+            <div class="bold-me" mat-subheader>Transaction</div>
+
+            <mat-list-item>
+              <span mat-line>Transfer Fee:</span>
+              <span class="bold-me">{{lastTransaction.transaction.transferFee}}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <span mat-line>Transfer Type Code:</span>
+              <span class="bold-me">{{lastTransaction.transaction.transferTypeCode}}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <span mat-line>Transaction Amount:</span>
+              <span class="bold-me">{{lastTransaction.transaction.totalAmount}}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <span mat-line>Transaction Date:</span>
+              <span class="bold-me">{{lastTransaction.date | date:'medium'}}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <span mat-line>Message Code:</span>
+              <span class="bold-me">{{lastTransaction.messageCode}}</span>
             </mat-list-item>
           </mat-list>
         </mat-card-content>

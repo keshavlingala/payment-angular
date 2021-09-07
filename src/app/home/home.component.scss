@@ -2,12 +2,18 @@
   margin-bottom: -3px;
 }
 
-.bold-currency {
+.bold-me {
   font-weight: bold;
   color: black;
 }
 
-.italic-currency{
+.italic-currency {
   font-weight: bold;
   font-style: italic;
+}
+
+::ng-deep mat-list-item {
+  span:nth-child(1) {
+    color: slategray;
+  }
 }
