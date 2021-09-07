@@ -3,7 +3,6 @@
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
-    <mat-error *ngIf="loginForm.errors">{{loginForm.errors.message}}</mat-error>
     <mat-error *ngIf="loginForm.errors">{{loginForm.errors.description}}</mat-error>
     <mat-card-content>
       <form class="d-flex flex-column" [formGroup]="loginForm">

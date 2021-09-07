@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private snack: MatSnackBar) {
     this.loginForm = fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -40,6 +41,10 @@ export class LoginComponent implements OnInit {
     const {username, password} = this.loginForm.value;
     this.auth.register(username, password).subscribe(val => {
       console.log(val);
+      this.loginForm.reset();
+      this.snack.open('Registration Success', 'Dismiss', {
+        duration: 1500
+      })
     }, error => {
       console.error(error);
       this.loginForm.reset();

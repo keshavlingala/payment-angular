@@ -2,42 +2,117 @@
   <div class="row">
     <div class="col-8">
       <mat-stepper orientation="vertical">
-        <mat-step>
+        <mat-step [stepControl]="senderForm" errorMessage="Sender Details are Required!">
           <ng-template matStepLabel>Sender Form</ng-template>
           <ng-template matStepContent>
-            <div>
-              <form class="d-flex flex-column" [formGroup]="senderForm">
-                <mat-form-field color="primary" appearance="outline">
-                  <mat-label>Sender A/C Number</mat-label>
-                  <input (keyup.enter)="fetchDetails()" appNumbersOnly formControlName="accountNumber" type="text"
-                         matInput
-                         placeholder="Sender Account Number">
-                </mat-form-field>
-                <mat-form-field color="primary" appearance="outline">
-                  <mat-label>Sender Name</mat-label>
-                  <input formControlName="accountName" type="text" matInput placeholder="Sender Account Number">
-                </mat-form-field>
-                <mat-form-field color="primary" appearance="outline">
-                  <mat-label>Clear Balance</mat-label>
-                  <input formControlName="clearBalance" type="text" matInput placeholder="Sender Account Number">
-                </mat-form-field>
-              </form>
-            </div>
+            <form class="d-flex flex-column" [formGroup]="senderForm">
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Sender A/C Number</mat-label>
+                <input (focusout)="fetchDetails()" (keyup.enter)="fetchDetails()" appNumbersOnly
+                       formControlName="accountNumber" type="text"
+                       matInput
+                       placeholder="Sender Account Number">
+              </mat-form-field>
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Sender Name</mat-label>
+                <input formControlName="accountName" type="text" matInput placeholder="Sender Name">
+              </mat-form-field>
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Sender BIC</mat-label>
+                <input formControlName="senderBIC" type="text" matInput>
+              </mat-form-field>
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Clear Balance</mat-label>
+                <input formControlName="clearBalance" type="text" matInput placeholder="Sender Account Number">
+              </mat-form-field>
+            </form>
             <button mat-button matStepperNext>Next</button>
           </ng-template>
         </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Step 2</ng-template>
+        <mat-step [stepControl]="receiverForm" errorMessage="Receiver Details are required!">
+          <ng-template matStepLabel>Receiver Details</ng-template>
           <ng-template matStepContent>
-            <p>This content was also rendered lazily</p>
+
+
+            <form class="d-flex flex-column" [formGroup]="receiverForm">
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Receiver A/C Number</mat-label>
+                <input appNumbersOnly formControlName="receiverAccountNumber" type="text"
+                       matInput
+                       placeholder="Sender Account Number">
+              </mat-form-field>
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Receiver A/C Holder Name</mat-label>
+                <input formControlName="receiverAccountName" type="text" matInput
+                       placeholder="Receiver Account Holder Name">
+              </mat-form-field>
+              <mat-form-field (focusout)="fetchBIC()" color="primary" appearance="outline">
+                <mat-label>Receiver BIC</mat-label>
+                <input formControlName="receiverBIC" type="text" matInput>
+              </mat-form-field>
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>Receiver Bank Name</mat-label>
+                <input formControlName="receiverBankName" type="text" matInput>
+              </mat-form-field>
+            </form>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </ng-template>
         </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Step 3</ng-template>
-          <p>This content was rendered eagerly</p>
-          <button mat-button matStepperPrevious>Back</button>
+        <mat-step [stepControl]="employeeForm" errorMessage="Transaction Details are required!">
+          <ng-template matStepLabel>Transaction Details</ng-template>
+          <form class="d-flex flex-column" [formGroup]="employeeForm">
+            <mat-form-field appearance="outline">
+              <mat-label>Transfer Type</mat-label>
+              <mat-select formControlName="transferTypeCode">
+                <mat-option *ngFor="let code of transferTypeCodeList |async" [value]="code.value">
+                  {{code.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>Please choose Transfer Type</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Message Code</mat-label>
+              <mat-select formControlName="messageCode">
+                <mat-option matTooltipPosition="right" [matTooltip]="messageType.description"
+                            *ngFor="let messageType of messageCodes |async"
+                            [value]="messageType.messageCode">
+                  {{messageType.messageCode}}
+                </mat-option>
+              </mat-select>
+              <mat-error>Please choose Message Code</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Currency</mat-label>
+              <mat-select (valueChange)="updateINR()" #currencyInput value="INR">
+                <mat-option matTooltipPosition="right" [matTooltip]="currency.name"
+                            *ngFor="let currency of currencyTypes" [value]="currency.code">
+                  {{currency.code}}
+                </mat-option>
+              </mat-select>
+              <mat-error>Please choose Message Code</mat-error>
+            </mat-form-field>
+            <mat-form-field (keyup)="updateINR()" color="primary" appearance="outline">
+              <mat-label>Transaction Amount</mat-label>
+              <input class="text-end adjust-text" appNumbersOnly formControlName="amount" placeholder="0" type="text"
+                     matInput>
+              <span matPrefix>{{getCurrencyItem().symbol}}&nbsp;</span>
+              <span matSuffix>.00</span>
+            </mat-form-field>
+            <mat-form-field color="primary" appearance="outline">
+              <mat-label>Total Amount in INR</mat-label>
+              <input class="text-end adjust-text bold-currency" formControlName="totalAmount" placeholder="0"
+                     type="text"
+                     matInput>
+              <span matPrefix>₹&nbsp;</span>
+              <span matSuffix>.00</span>
+              <mat-hint>Including Transfer Fee of 0.25% : <span
+                class="italic-currency">{{getETC() | currency:'INR' }}</span></mat-hint>
+            </mat-form-field>
+            <button color="primary" mat-raised-button (click)="submit()">Transfer</button>
+          </form>
         </mat-step>
       </mat-stepper>
     </div>
