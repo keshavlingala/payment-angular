@@ -8,6 +8,8 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorComponent} from "../dialogs/error/error.component";
 import {SuccessComponent} from "../dialogs/success/success.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatStepper} from "@angular/material/stepper";
 
 @Component({
   selector: 'app-home',
@@ -31,12 +33,14 @@ export class HomeComponent implements OnInit {
     {code: 'USD', name: 'US Dollar', value: 74, symbol: '$'}
   ]
   @ViewChild('currencyInput') matSelect!: MatSelect;
+  @ViewChild('matStepper') matStepper!: MatStepper;
   lastTransaction = this.data.getLastTransaction();
 
   constructor(
     private fb: FormBuilder,
     private data: DataService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snack: MatSnackBar
   ) {
     this.senderForm = fb.group({
       accountNumber: ['', [Validators.required, Validators.maxLength(14), Validators.minLength(14)]],
@@ -58,10 +62,9 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.transferTypeCodeList = this.data.getTransferTypeCodes();
     this.messageCodes = this.data.getMessageTypeCodes();
-
   }
 
   fetchDetails() {
@@ -128,6 +131,10 @@ export class HomeComponent implements OnInit {
       console.log(val);
       this.dialog.open(SuccessComponent)
       this.lastTransaction = this.data.getLastTransaction();
+      this.matStepper.reset();
+      this.snack.open('Transaction is Successful', 'Dismiss', {
+        duration: 1500
+      })
     }, error => {
       console.log(error)
       this.dialog.open(ErrorComponent, {

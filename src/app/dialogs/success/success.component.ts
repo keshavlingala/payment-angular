@@ -11,7 +11,6 @@ export class SuccessComponent {
 
 
   constructor(
-    public dialogRef: MatDialogRef<SuccessComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TransactionResponse) {
 
   }
