@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DataService} from "../data.service";
-import {CurrencyType, MessageType, TransactionRequest, TransferTypeCode} from "../models/models";
+import {DataService} from "../../services/data.service";
+import {CurrencyType, MessageType, TransactionRequest, TransferTypeCode} from "../../models/models";
 import {Observable, of} from "rxjs";
 import {MatSelect} from "@angular/material/select";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";

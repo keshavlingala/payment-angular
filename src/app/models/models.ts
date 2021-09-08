@@ -1,5 +1,6 @@
 import {HttpErrorResponse} from "@angular/common/http";
 
+
 export interface Customer {
   accountNumber: string;
   clearBalance: number;
@@ -67,3 +68,25 @@ export interface TransactionResponse {
   messageCode: string;
 }
 
+export interface TransactionItem {
+  transactionID: number,
+  customer: {
+    accountNumber: string
+    name: string
+    clearBalance: number;
+    overdraft: boolean
+  },
+  receiverName: string
+  receiverAccountNumber: string
+  receiverBIC: {
+    bic: string
+    name: string
+  },
+  messageCode: {
+    messageCode: string
+    description: string
+  },
+  transferCode: 'C' | 'O'
+  amount: number
+  timestamp: Date
+}

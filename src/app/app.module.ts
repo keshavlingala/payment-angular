@@ -5,8 +5,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {LoginComponent} from './login/login.component';
-import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './components/login/login.component';
+import {HomeComponent} from './components/home/home.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -14,17 +14,22 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatStepperModule} from "@angular/material/stepper";
-import {NumbersOnlyDirective} from './numbers-only.directive';
+import {NumbersOnlyDirective} from './misc/numbers-only.directive';
 import {MatListModule} from "@angular/material/list";
-import {JwtInterceptor} from "./jwt.interceptor";
+import {JwtInterceptor} from "./misc/jwt.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatDialogModule} from "@angular/material/dialog";
-import { ErrorComponent } from './dialogs/error/error.component';
-import { SuccessComponent } from './dialogs/success/success.component';
+import { ErrorComponent } from './components/dialogs/error/error.component';
+import { SuccessComponent } from './components/dialogs/success/success.component';
+import { HistoryComponent } from './components/history/history.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -33,7 +38,8 @@ import { SuccessComponent } from './dialogs/success/success.component';
     HomeComponent,
     NumbersOnlyDirective,
     ErrorComponent,
-    SuccessComponent
+    SuccessComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +59,11 @@ import { SuccessComponent } from './dialogs/success/success.component';
     MatOptionModule,
     MatTooltipModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatChipsModule
   ],
   providers: [
     {

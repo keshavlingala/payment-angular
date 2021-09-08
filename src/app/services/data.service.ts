@@ -1,7 +1,21 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {GET_BANK_DATA, GET_CUSTOMER_DATA, GET_MESSAGE_CODE_DATA, POST_TRANSACTION} from "./models/constant";
-import {Bank, Customer, MessageType, TransactionRequest, TransactionResponse, TransferTypeCode} from "./models/models";
+import {
+  GET_BANK_DATA,
+  GET_CUSTOMER_DATA,
+  GET_MESSAGE_CODE_DATA,
+  GET_TRANSACTIONS,
+  POST_TRANSACTION
+} from "../models/constant";
+import {
+  Bank,
+  Customer,
+  MessageType,
+  TransactionItem,
+  TransactionRequest,
+  TransactionResponse,
+  TransferTypeCode
+} from "../models/models";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 
@@ -36,6 +50,10 @@ export class DataService {
 
   getLastTransaction(): TransactionResponse {
     return <TransactionResponse>JSON.parse(localStorage.getItem('lastMade') || 'false');
+  }
+
+  getAllTransactions() {
+    return this.http.get<TransactionItem[]>(GET_TRANSACTIONS);
   }
 
   transactionRequest(transactionRequest: TransactionRequest): Observable<TransactionResponse> {

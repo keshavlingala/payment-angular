@@ -1,0 +1,40 @@
+td {
+  text-align: center;
+}
+
+.mat-header-row {
+  background-color: #212121;
+  color: white;
+  font-weight: bold;
+}
+
+.mat-header-cell {
+  color: white;
+  font-weight: bold;
+  border-right: solid 1px white;
+}
+
+
+.mat-cell {
+  border-right: solid 1px slategray;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding: 0;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding: 0;
+}
+
+.mat-chip.mat-standard-chip:not(.mat-chip-disabled):active {
+  box-shadow: none;
+}
+
+::ng-deep .mat-sort-header-container {
+  justify-content: center;
+}

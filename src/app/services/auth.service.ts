@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {LOGIN_URL, REGISTER_URL} from "./models/constant";
+import {LOGIN_URL, REGISTER_URL} from "../models/constant";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 
