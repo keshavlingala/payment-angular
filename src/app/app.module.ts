@@ -21,15 +21,16 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatBadgeModule} from "@angular/material/badge";
 import {MatDialogModule} from "@angular/material/dialog";
-import { ErrorComponent } from './components/dialogs/error/error.component';
-import { SuccessComponent } from './components/dialogs/success/success.component';
-import { HistoryComponent } from './components/history/history.component';
+import {ErrorComponent} from './components/dialogs/error/error.component';
+import {SuccessComponent} from './components/dialogs/success/success.component';
+import {HistoryComponent} from './components/history/history.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatChipsModule} from "@angular/material/chips";
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {Ng2GoogleChartsModule} from "ng2-google-charts";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatChipsModule} from "@angular/material/chips";
     NumbersOnlyDirective,
     ErrorComponent,
     SuccessComponent,
-    HistoryComponent
+    HistoryComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import {MatChipsModule} from "@angular/material/chips";
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatChipsModule
+    MatChipsModule,
+    Ng2GoogleChartsModule
   ],
   providers: [
     {

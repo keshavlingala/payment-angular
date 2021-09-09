@@ -38,3 +38,15 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 ::ng-deep .mat-sort-header-container {
   justify-content: center;
 }
+
+.mat-chip .success {
+    background-color: green !important;
+    color: white !important;
+}
+.mat-chip .failed{
+  background-color: #ff1744;
+
+  .mat-cell, .mat-footer-cell {
+    color: white;
+  }
+}

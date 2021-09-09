@@ -88,5 +88,7 @@ export interface TransactionItem {
   },
   transferCode: 'C' | 'O'
   amount: number
-  timestamp: Date
+  timestamp: Date,
+  status: 'SUCCESS' | 'FAILED';
+  failureReason?: string;
 }

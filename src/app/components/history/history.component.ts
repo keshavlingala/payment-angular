@@ -20,12 +20,13 @@ import {MatSort} from "@angular/material/sort";
 })
 export class HistoryComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<TransactionItem>;
-  columns = ['transactionID', 'senderName', 'senderAccountNumber', 'receiverName', 'receiverAccountNumber', 'transferCode', 'amount', 'date'];
+  columns = ['transactionID', 'senderName', 'senderAccountNumber',
+    'receiverName', 'receiverAccountNumber', 'transferCode', 'amount', 'date', 'status'];
   expandedElement: TransactionItem | null = null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  selectedChip: 'Yesterday' | 'Today' | 'None' = 'None';
-  dates = ['Yesterday', 'Today', 'None'];
+  selectedChip: string = 'None';
+  chips: { [key: string]: string; } = {}
   filterString: string = ''
 
   constructor(
@@ -33,7 +34,6 @@ export class HistoryComponent implements OnInit, AfterViewInit {
   ) {
     this.dataSource = new MatTableDataSource();
     const old = this.dataSource.filterPredicate
-    console.log(old)
     this.dataSource.filterPredicate = (val, search) => {
       const date = new Date(val.timestamp);
       return (date.toString().toLocaleLowerCase() +
@@ -57,6 +57,15 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     this.dataSource.data = await this.data.getAllTransactions().toPromise();
     console.log(this.dataSource.data)
     this.dataSource.filter = this.filterString;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.chips = {
+      'Failed': 'FAILED',
+      'Success': 'SUCCESS',
+      'Today': new Date().toDateString(),
+      'Yesterday': yesterday.toDateString(),
+      'None': ''
+    }
   }
 
   asTransaction(obj: any): TransactionItem {
@@ -64,25 +73,21 @@ export class HistoryComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.filterString = filterValue.toLowerCase();
+    this.filterString = (event.target as HTMLInputElement).value;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-    this.dataSource.filter = this.filterString;
+    this.dataSource.filter = this.filterString.toLowerCase();
   }
 
   changeSelected(i: string) {
     // @ts-ignore
     this.selectedChip = i;
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const obj: { [key: string]: string; } = {
-      'Today': new Date().toDateString(),
-      'Yesterday': yesterday.toDateString(),
-      'None': ''
-    }
-    this.filterString = obj[this.selectedChip]
+    this.filterString = this.chips[this.selectedChip]
     this.dataSource.filter = this.filterString;
+  }
+
+  getChipKeys() {
+    return Object.keys(this.chips)
   }
 }

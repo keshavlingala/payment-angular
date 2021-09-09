@@ -2,6 +2,7 @@
   <img routerLink="/" class="brand-logo" src="assets/dbs_logo.svg" alt="DBS Logo">
   <span class="flex-fill"></span>
   <button routerLinkActive="active" mat-flat-button color="primary" routerLink="/history" *ngIf="auth.isLoggedIn">History</button>
+  <button routerLinkActive="active" mat-flat-button color="primary" routerLink="/dashboard" *ngIf="auth.isLoggedIn">Dashboard</button>
   <button mat-button color="warn" (click)="auth.logout()" *ngIf="auth.isLoggedIn">Logout</button>
   <button routerLinkActive="active" mat-stroked-button color="primary" routerLink="/login" *ngIf="!auth.isLoggedIn">Login</button>
 </mat-toolbar>
