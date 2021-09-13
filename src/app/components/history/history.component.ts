@@ -55,7 +55,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.dataSource.data = await this.data.getAllTransactions().toPromise();
-    console.log(this.dataSource.data)
+
     this.dataSource.filter = this.filterString;
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);

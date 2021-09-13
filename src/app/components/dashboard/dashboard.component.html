@@ -1,14 +1,33 @@
-<div class="row">
-  <div class="col">
-    <google-chart #cchart [data]="transferTypeFreq"></google-chart>
+<div *ngIf="this.transferTypeFreq.dataTable else loading" class="charts">
+  <div>
+    <h2>{{transferTypeFreq.options.title}}</h2>
+    <google-chart [data]="transferTypeFreq"></google-chart>
   </div>
-  <div class="col">
+  <div>
+    <h2>{{successFailure.options.title}}</h2>
     <google-chart [data]="successFailure"></google-chart>
   </div>
-</div>
-<div class="row">
-  <div class="col">
+  <div>
+    <h2>{{amountTransfer.options.title}}</h2>
     <google-chart [data]="amountTransfer"></google-chart>
+  </div>
+  <div>
+    <h2>{{messageCount.options.title}}</h2>
+    <google-chart [data]="messageCount"></google-chart>
+  </div>
+  <div>
+    <h2>{{topCustomers.options.title}}</h2>
+    <google-chart [data]="topCustomers"></google-chart>
+  </div>
+  <div>
+    <h2>{{amountByBanks.options.title}}</h2>
+    <google-chart [data]="amountByBanks"></google-chart>
   </div>
 </div>
 
+<button (click)="fabRefresh()" class="fab-icon" mat-fab color="primary">
+  <mat-icon>refresh</mat-icon>
+</button>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

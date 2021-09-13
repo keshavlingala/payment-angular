@@ -92,3 +92,7 @@ export interface TransactionItem {
   status: 'SUCCESS' | 'FAILED';
   failureReason?: string;
 }
+
+export type MessageCount = [messageCode: string, numberOfTransactions: number];
+export type TopCustomers = [accountNumber: string, remittance: number]
+export type AmountByBank = [name: string, amount: number]

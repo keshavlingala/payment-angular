@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   login() {
     const {username, password} = this.loginForm.value;
     this.auth.login(username, password).subscribe(async value => {
-      console.log(value);
+
       await this.router.navigate(['home'])
     }, error => {
       console.error(error);
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   register() {
     const {username, password} = this.loginForm.value;
     this.auth.register(username, password).subscribe(val => {
-      console.log(val);
+
       this.loginForm.reset();
       this.snack.open('Registration Success', 'Dismiss', {
         duration: 1500

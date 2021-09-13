@@ -31,6 +31,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatChipsModule} from "@angular/material/chips";
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {Ng2GoogleChartsModule} from "ng2-google-charts";
+import {MatIconModule} from "@angular/material/icon";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import {Ng2GoogleChartsModule} from "ng2-google-charts";
     MatSortModule,
     MatPaginatorModule,
     MatChipsModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   providers: [
     {

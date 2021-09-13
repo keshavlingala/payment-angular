@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
   }
 
   submit() {
-    console.log({...this.employeeForm.value, ...this.senderForm.value, ...this.receiverForm.value})
+
     const {
       accountNumber = '',
       amount = 0,
@@ -128,7 +128,7 @@ export class HomeComponent implements OnInit {
       }
     }
     this.data.transactionRequest(transactionRequest).subscribe(val => {
-      console.log(val);
+
       this.dialog.open(SuccessComponent)
       this.lastTransaction = this.data.getLastTransaction();
       this.matStepper.reset();
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
         duration: 1500
       })
     }, error => {
-      console.log(error)
+
       this.dialog.open(ErrorComponent, {
         data: error
       })

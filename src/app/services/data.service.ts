@@ -1,16 +1,22 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
+  GET_AMOUNT_BY_BANKS,
   GET_BANK_DATA,
   GET_CUSTOMER_DATA,
   GET_MESSAGE_CODE_DATA,
+  GET_MESSAGE_COUNTS,
+  GET_TOP_CUSTOMERS,
   GET_TRANSACTIONS,
   POST_TRANSACTION
 } from "../models/constant";
 import {
+  AmountByBank,
   Bank,
   Customer,
+  MessageCount,
   MessageType,
+  TopCustomers,
   TransactionItem,
   TransactionRequest,
   TransactionResponse,
@@ -63,5 +69,17 @@ export class DataService {
         return res;
       })
     )
+  }
+
+  getMessageCounts() {
+    return this.http.get<MessageCount[]>(GET_MESSAGE_COUNTS);
+  }
+
+  getTopCustomers() {
+    return this.http.get<TopCustomers[]>(GET_TOP_CUSTOMERS);
+  }
+
+  getAmountByBanks() {
+    return this.http.get<AmountByBank[]>(GET_AMOUNT_BY_BANKS);
   }
 }
