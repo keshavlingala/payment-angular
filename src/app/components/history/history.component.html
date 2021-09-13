@@ -62,7 +62,7 @@
       <td mat-cell *matCellDef="let element"> {{asTransaction(element).amount | currency:'INR'}} </td>
     </ng-container>
     <ng-container matColumnDef="status">
-      <th mat-sort-header mat-header-cell *matHeaderCellDef>Amount</th>
+      <th mat-sort-header mat-header-cell *matHeaderCellDef>Status</th>
       <td [matTooltip]="asTransaction(element).failureReason || ''" mat-cell
           *matCellDef="let element">
         <mat-chip selected
