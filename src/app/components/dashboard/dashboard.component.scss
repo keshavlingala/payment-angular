@@ -14,7 +14,16 @@
     padding: 10px;
     width: 48%;
     overflow: auto;
+    min-height: 400px;
     //height: 500px;
+    h2 {
+      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(43deg, #dc3911, #3466cb);
+      color: white;
+      box-shadow: 0px 5px 4px 0px #3466cb87;
+      margin-bottom: 20px;
+    }
   }
 }
 
@@ -28,3 +37,12 @@
   width: 96% !important;
   //height: 600px !important;
 }
+
+@media only screen and (max-width: 600px) {
+  .charts {
+    > div {
+      width: 98%;
+    }
+  }
+}
+

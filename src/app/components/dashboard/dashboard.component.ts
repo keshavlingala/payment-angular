@@ -14,24 +14,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
   annotationChart: GoogleChartInterface = {
     chartType: 'AnnotationChart',
     options: {
-      title: 'Transactions Amount with range of date and time',
+      title: '',
       displayAnnotations: true,
-      isStacked: 'relative',
+      height: 500
     }
   };
   comboChart: GoogleChartInterface = {
     chartType: 'ComboChart',
     options: {
-      title: 'Combo Chart of Transactions by type',
+      title: '',
       vAxis: {title: 'Sum of Transaction Amount'},
       hAxis: {title: 'Dates'},
       seriesType: 'bars',
       series: {5: {type: 'line'}},
+      height: 400
+      // isStacked: 'relative',
     }
   };
   private common = {
     // width: 600,
-    // height: 400,
+    height: 400,
     animation: {
       duration: 1000,
       easing: 'out',
@@ -41,7 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     chartType: 'ColumnChart',
     // dataTable: [],
     options: {
-      title: 'Number of Transactions Date wise with Type of transaction',
+      title: '',
       ...this.common,
       legend: {position: 'top', maxLines: 3},
       isStacked: true,
@@ -53,7 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // dataTable: [],
     options: {
       ...this.common,
-      title: 'Success-Failure Rate',
+      title: '',
       is3D: true,
       slices: {
         0: {offset: 0.3},
@@ -65,10 +67,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     chartType: 'ColumnChart',
     // dataTable: [],
     options: {
-      title: 'Amount Transferred By Date',
+      title: '',
       ...this.common,
       isStacked: true,
-      legend: {position: 'top'}
+      legend: {position: 'top'},
+      // width: 700
     }
   };
   messageCount: GoogleChartInterface = {
@@ -76,7 +79,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // dataTable: [],
     options: {
       ...this.common,
-      title: 'Message Count By Transaction',
+      title: '',
       legend: {position: 'right'},
       is3D: true,
     }
@@ -86,7 +89,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // dataTable: [],
     options: {
       ...this.common,
-      title: 'Top 5 Customers and Transaction Amount',
+      title: '',
       legend: {position: 'top'}
     }
   }
@@ -94,7 +97,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     chartType: 'PieChart',
     // dataTable: [],
     options: {
-      title: 'Amount Transaction by each bank',
+      title: '',
       ...this.common,
       legend: {position: 'right'},
       is3D: true
@@ -182,7 +185,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log('Ready')
   }
 
-  private refreshCharts() {
+  refreshCharts() {
     try {
       this.transferTypeFreq?.component?.draw();
       this.successFailure?.component?.draw();
@@ -190,6 +193,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.messageCount?.component?.draw();
       this.topCustomers?.component?.draw();
       this.amountByBanks?.component?.draw();
+      this.annotationChart?.component?.draw();
+      this.comboChart?.component?.draw();
     } catch (e) {
     }
   }
