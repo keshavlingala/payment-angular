@@ -11,9 +11,27 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   subs: Subscription[] = []
+  annotationChart: GoogleChartInterface = {
+    chartType: 'AnnotationChart',
+    options: {
+      title: 'Transactions Amount with range of date and time',
+      displayAnnotations: true,
+      isStacked: 'relative',
+    }
+  };
+  comboChart: GoogleChartInterface = {
+    chartType: 'ComboChart',
+    options: {
+      title: 'Combo Chart of Transactions by type',
+      vAxis: {title: 'Sum of Transaction Amount'},
+      hAxis: {title: 'Dates'},
+      seriesType: 'bars',
+      series: {5: {type: 'line'}},
+    }
+  };
   private common = {
-    width: 600,
-    height: 400,
+    // width: 600,
+    // height: 400,
     animation: {
       duration: 1000,
       easing: 'out',
@@ -127,6 +145,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.amountByBanks.dataTable = [['Bank Name', 'Amount'], ...value];
       this.refreshCharts();
     }))
+    this.subs.push(this.data.getDateStats().subscribe(value => {
+      this.annotationChart.dataTable = [['Date', 'Success Amount', 'Failed Amount', 'Customer Transfer', 'Bank Transfer', 'Date String'],
+        ...value.map(obj => {
+          obj.push(obj[0]);
+          obj[0] = new Date(obj[0]);
+          return obj;
+        })]
+      this.refreshCharts();
+    }))
+    this.subs.push(this.data.getDateStats().subscribe(value => {
+      this.comboChart.dataTable = [['Date', 'Success Amount', 'Failed Amount', 'Customer Transfer', 'Bank Transfer'],
+        ...value]
+      this.refreshCharts();
+    }))
+
+
   }
 
   ngOnInit() {
@@ -144,6 +178,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.initObservables();
   }
 
+  ready() {
+    console.log('Ready')
+  }
+
   private refreshCharts() {
     try {
       this.transferTypeFreq?.component?.draw();
@@ -154,9 +192,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.amountByBanks?.component?.draw();
     } catch (e) {
     }
-  }
-
-  ready() {
-    console.log('Ready')
   }
 }

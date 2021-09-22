@@ -96,3 +96,4 @@ export interface TransactionItem {
 export type MessageCount = [messageCode: string, numberOfTransactions: number];
 export type TopCustomers = [accountNumber: string, remittance: number]
 export type AmountByBank = [name: string, amount: number]
+export type DateStat = [string | Date, string, string, string, string]

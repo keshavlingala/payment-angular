@@ -4,6 +4,7 @@ import {
   GET_AMOUNT_BY_BANKS,
   GET_BANK_DATA,
   GET_CUSTOMER_DATA,
+  GET_DATE_STATS,
   GET_MESSAGE_CODE_DATA,
   GET_MESSAGE_COUNTS,
   GET_TOP_CUSTOMERS,
@@ -14,6 +15,7 @@ import {
   AmountByBank,
   Bank,
   Customer,
+  DateStat,
   MessageCount,
   MessageType,
   TopCustomers,
@@ -81,5 +83,9 @@ export class DataService {
 
   getAmountByBanks() {
     return this.http.get<AmountByBank[]>(GET_AMOUNT_BY_BANKS);
+  }
+
+  getDateStats() {
+    return this.http.get<DateStat[]>(GET_DATE_STATS);
   }
 }

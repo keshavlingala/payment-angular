@@ -90,4 +90,9 @@ export class HistoryComponent implements OnInit, AfterViewInit {
   getChipKeys() {
     return Object.keys(this.chips)
   }
+
+  getIcon(element: any) {
+    if (this.asTransaction(element).status == 'SUCCESS') return 'done'
+    return 'close'
+  }
 }

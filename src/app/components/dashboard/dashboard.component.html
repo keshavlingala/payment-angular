@@ -1,25 +1,39 @@
+<div class="d-flex justify-content-center">
+  <h1>Analytics Dashboard</h1>
+</div>
 <div *ngIf="this.transferTypeFreq.dataTable else loading" class="charts">
-  <div>
-    <h2>{{transferTypeFreq.options.title}}</h2>
+  <div class="mat-elevation-z3">
+    <h2>
+      {{transferTypeFreq.options.title}}
+    </h2>
     <google-chart [data]="transferTypeFreq"></google-chart>
   </div>
-  <div>
+  <div class="mat-elevation-z3">
     <h2>{{successFailure.options.title}}</h2>
     <google-chart [data]="successFailure"></google-chart>
   </div>
-  <div>
-    <h2>{{amountTransfer.options.title}}</h2>
-    <google-chart [data]="amountTransfer"></google-chart>
+  <div class="mat-elevation-z3 full-page">
+    <h2>{{comboChart.options.title}}</h2>
+    <google-chart [data]="comboChart"></google-chart>
   </div>
-  <div>
+  <div class="mat-elevation-z3">
     <h2>{{messageCount.options.title}}</h2>
     <google-chart [data]="messageCount"></google-chart>
   </div>
-  <div>
+  <div class="mat-elevation-z3">
     <h2>{{topCustomers.options.title}}</h2>
     <google-chart [data]="topCustomers"></google-chart>
   </div>
-  <div>
+  <div class="mat-elevation-z3 full-page">
+    <h2>{{annotationChart.options.title}}</h2>
+    <google-chart [data]="annotationChart"></google-chart>
+  </div>
+
+  <div class="mat-elevation-z3">
+    <h2>{{amountTransfer.options.title}}</h2>
+    <google-chart [data]="amountTransfer"></google-chart>
+  </div>
+  <div class="mat-elevation-z3">
     <h2>{{amountByBanks.options.title}}</h2>
     <google-chart [data]="amountByBanks"></google-chart>
   </div>

@@ -34,6 +34,7 @@ import {Ng2GoogleChartsModule} from "ng2-google-charts";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -46,34 +47,35 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     HistoryComponent,
     DashboardComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    HttpClientModule,
-    MatStepperModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatTooltipModule,
-    FormsModule,
-    MatDialogModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatChipsModule,
-    Ng2GoogleChartsModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        HttpClientModule,
+        MatStepperModule,
+        MatListModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatTooltipModule,
+        FormsModule,
+        MatDialogModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatChipsModule,
+        Ng2GoogleChartsModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatGridListModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
